@@ -112,9 +112,9 @@ VALUES
   (12, 'Tomato Sauce');
 
 
-  --VERÝ TEMÝZLÝÐÝ
--- distance ve duration sütununda sayýsal iþlemler yapabilmek için sondaki string ifadeleri silip, sütun tipini deðiþtirdim.
---Ayný zamanda cancellation sütununda da boþluklarý NULL olarak deðiþtirdim.
+  --VERİ TEMİZLİĞİ
+-- distance ve duration sütununda sayısal işlemler yapabilmek için sondaki string ifadeleri silip, sütun tipini değiştirdim.
+--Aynı zamanda cancellation sütununda da boşlukları NULL olarak değiştirdim.
 UPDATE runner_orders
 SET distance = CASE
                  WHEN RIGHT(distance, 2) = 'km' THEN LEFT(distance, LEN(distance) - 2)
@@ -157,7 +157,7 @@ FROM runner_orders
 WHERE cancellation is NULL
 GROUP BY runner_id;
 
---1 nolu runner 4,2 nolu runner 3, 3 nolu runner 1 baþarýlý sipariþ teslim etmiþ.
+--1 nolu runner 4,2 nolu runner 3, 3 nolu runner 1 başarılı sipariş teslim etmiş.
 
 --4.How many of each type of pizza was delivered?
 SELECT pizza_id,
@@ -166,7 +166,7 @@ FROM customer_orders co
 JOIN runner_orders ro on co.order_id = ro.order_id
 WHERE cancellation is NULL
 GROUP BY pizza_id; 
---1 nolu pizza 9 kez teslim edilmiþ, 2 nolu pizza 3 kez teslim edilmiþ.
+--1 nolu pizza 9 kez teslim edilmiş, 2 nolu pizza 3 kez teslim edilmiş.
 
 --5.How many Vegetarian and Meatlovers were ordered by each customer?
 SELECT customer_id,
@@ -185,7 +185,7 @@ WHERE cancellation is NULL
 GROUP BY co.order_id
 ORDER BY count DESC;
 
---En fazla 4. sipariþte 3 adet pizza sipariþ edilmiþ.
+--En fazla 4. siparişte 3 adet pizza sipariþ edilmiş.
 --7.For each customer, how many delivered pizzas had at least 1 change and how many had no changes?
 SELECT customer_id,
        SUM(CASE
@@ -209,7 +209,7 @@ JOIN runner_orders ro on co.order_id = ro.order_id
 WHERE ro.cancellation is NULL and exclusions is not null and extras is not null
 GROUP BY pizza_id;
 
---Bu koþullara sahip 1 adet sipariþ teslim edilmiþ.
+--Bu koşullara sahip 1 adet sipariş teslim edilmiş.
 --9.What was the total volume of pizzas ordered for each hour of the day?
 SELECT 
     FORMAT(order_time, 'HH') as saat, 
@@ -227,7 +227,7 @@ FROM
     customer_orders
 GROUP BY 
     FORMAT(order_time, 'dddd');
---Cuma 1,Cumartesi 5, Perþembe 3, Çarþamba 5 sipariþ verilmiþ.
+--Cuma 1,Cumartesi 5, Perşembe 3, Çarşamba 5 sipariş verilmiş.
 
 --B.Runner and Customer Experience
 --1.How many runners signed up for each 1 week period? (i.e. week starts 2021-01-01)
@@ -245,7 +245,7 @@ FROM customer_orders c
 JOIN runner_orders r on c.order_id = r.order_id
 GROUP BY runner_id;
 
---1 nolu runnerýn ortalamalasý 15,2 nolu runnerýn ortalamasý 24,3 nolu runnerýn ortalamasý 10 dk.
+--1 nolu runnerın ortalamalası 15,2 nolu runnerın ortalaması 24,3 nolu runnerın ortalaması 10 dk.
 
 --3.Is there any relationship between the number of pizzas and how long the order takes to prepare?
 WITH prep_time_cte AS
@@ -266,8 +266,8 @@ SELECT
   AVG(prep_time) AS avg_prep_time
 FROM prep_time_cte
 GROUP BY pizza_order;
---1 pizza sipariþ edildiðinde hazýrlama süresi 12 dk, 2 pizza sipariþ edildiðinde sipariþ baþýna hazýrlama süresi 9 dk oluyor,3 pizza sipariþ edildiðinde
---hazýrlama sipariþ baþýna 10 dk oluyor.Yani en verimli süre 2 pizza birlikte hazýrladýðýnda oluyor.
+--1 pizza sipariş edildiğinde hazırlama süresi 12 dk, 2 pizza sipariş edildiğinde sipariş baþýna hazırlama süresi 9 dk oluyor,3 pizza sipariþ edildiğinde
+--hazırlama sipariş başına 10 dk oluyor.Yani en verimli süre 2 pizza birlikte hazırlandığında oluyor.
 
 --4.What was the average distance travelled for each customer?
 SELECT customer_id,
@@ -275,7 +275,7 @@ SELECT customer_id,
 FROM runner_orders r
 JOIN customer_orders c on r.order_id = c.order_id
 GROUP BY customer_id;
---101 nolu müþteri için 20,102 nolu müþteri için 16.733,103 nolu müþteri için 23.4,104 nolu müþteri için 10,105 nolu müþteri için 25 km yol kat edildi.
+--101 nolu müşteri için 20,102 nolu müşteri için 16.733,103 nolu müşteri için 23.4,104 nolu müşteri için 10,105 nolu müşteri için 25 km yol kat edildi.
 
 --5.What was the difference between the longest and shortest delivery times for all orders?
 SELECT MAX(duration)-MIN(duration) as difference
@@ -297,7 +297,7 @@ GROUP BY
     r.runner_id,c.order_id
 ORDER BY
     c.order_id;
---1 nolu runner için bir trend yok.2 nolu runner için artan bir trend var.3 nolu runner ýn teslim ettiði teksipariþ olduðu için bir trend yok.
+--1 nolu runner için bir trend yok.2 nolu runner için artan bir trend var.3 nolu runnerın teslim ettiği tek sipariþ olduğu için bir trend yok.
 --7.What is the successful delivery percentage for each runner?
 SELECT 
   runner_id, 
@@ -357,7 +357,7 @@ SELECT TOP 1
 FROM SplitExclusions
 GROUP BY exclusions_item
 ORDER BY frequency DESC;
- --4 defa 4 nolu topping çýkarýlmýþ.
+ --4 defa 4 nolu topping çıkarılmış.
 
 --4.Generate an order item for each record in the customers_orders table in the format of one of the following: :
 --Meat Lovers
@@ -376,7 +376,7 @@ UPDATE customer_orders
 SET record_id = NEXT VALUE FOR Seq_customer_orders;
 
 
---Hangi kayýtlarda extra malzeme eklenmiþ ona bakýyoruz.
+--Hangi kayıtlarda extra malzeme eklenmiş ona bakıyoruz.
 SELECT 
   c.record_id,
   TRIM(e.value) AS extra_id
@@ -387,7 +387,7 @@ FROM customer_orders c
 SELECT *
 FROM extrasBreaks;
 
-----Hangi kayýtlarda malzeme çýkarýlmýþ ona bakýyoruz.
+----Hangi kayıtlarda malzeme çıkarılmış ona bakıyoruz.
 SELECT 
   c.record_id,
   TRIM(e.value) AS exclusion_id
@@ -398,7 +398,7 @@ FROM customer_orders c
 SELECT *
 FROM exclusionsBreak;
 
---Yeni tablolar oluþturup pizza_info adýnda yeni bir sütun ekledim.
+--Yeni tablolar oluşturup pizza_info adında yeni bir sütun ekledim.
 
 
 WITH extras_table AS (
@@ -510,7 +510,6 @@ ORDER BY topping_frekans DESC;
 
 --D.Pricing and Ratings
 --1.If a Meat Lovers pizza costs $12 and Vegetarian costs $10 and there were no charges for changes - how much money has Pizza Runner made so far if there are no delivery fees?
--- Pizza türüne göre toplam fiyat hesaplama
 SELECT 
 	   SUM(CASE WHEN pn.pizza_name = 'Meatlovers' THEN 12 ELSE 10 END) AS toplam_fiyat
 FROM 
