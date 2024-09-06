@@ -49,7 +49,7 @@ VALUES
   ('A', '2021-01-07'),
   ('B', '2021-01-09');
 
---1.Restoranda her müşterinin harcadığı toplam miktar nedir?
+--1.Restoranda her mÃ¼ÅŸterinin harcadÄ±ÄŸÄ± toplam miktar nedir?
 
 select * from sales s 
 JOIN menu m on m.product_id = s.product_id;
@@ -60,18 +60,18 @@ from sales s
 JOIN menu m on m.product_id = s.product_id
 group by customer_id
 
---A müşterisi 76, B müşterisi 74, C müşterisi 36 harcama yapmıştır.
+--A mÃ¼ÅŸterisi 76, B mÃ¼ÅŸterisi 74, C mÃ¼ÅŸterisi 36 harcama yapmÄ±ÅŸtÄ±r.
 
---2.Her müşteri restoranı kaç gün ziyaret etti?
---Müşteri aynı gün birden fazla ziyaret edebileceği için dıstınct komutu kullandık.
+--2.Her mÃ¼ÅŸteri restoranÄ± kaÃ§ gÃ¼n ziyaret etti?
+--MÃ¼Återi aynI gÃ¼n birden fazla ziyaret edebileceÄi iÃ§in dÄ±stÄ±nct komutu kullandÄ±k.
 select customer_id,
        count(DISTINCT order_date)
 from sales
 group by customer_id
---A müşterisi 4 gün, B müşterisi 6 gün, C müşterisi 2 gün ziyaret
+--A mÃ¼ÅŸterisi 4 gÃ¼n, B mÃ¼ÅŸterisi 6 gÃ¼n, C mÃ¼ÅŸterisi 2 gÃ¼n ziyaret
 
 
---3.Her müşterinin menüden satın aldığı ilk ürün neydi?
+--3.Her mÃ¼ÅŸterinin menÃ¼den satÄ±n aldÄ±ÄŸÄ± ilk Ã¼rÃ¼n neydi?
 
 with case_tablo as(
 select distinct customer_id, order_date, product_name,
@@ -82,9 +82,9 @@ join menu m on m.product_id = s.product_id
 select customer_id, product_name
 from case_tablo where rn=1
 
---A müşterisi ilk önce curry ve sushi, B müşterisi curry, C müşterisi ramen almış.
+--A mÃ¼ÅŸterisi ilk Ã¶nce curry ve sushi, B mÃ¼ÅŸterisi curry, C mÃ¼ÅŸterisi ramen almÄ±ÅŸ.
 
---4.Menüde en çok satın alınan ürün hangisidir ve tüm müşteriler tarafından kaç kez satın alınmıştır?
+--4.MenÃ¼de en Ã§ok satÄ±n alÄ±nan Ã¼rÃ¼n hangisidir ve tÃ¼m mÃ¼ÅŸteriler tarafÄ±ndan kaÃ§ kez satÄ±n alÄ±nmÄ±ÅŸtÄ±r?
 
 select top 1 product_name,
        count(s.product_id)
@@ -92,9 +92,9 @@ from sales s
 JOIN menu m on m.product_id = s.product_id 
 group by product_name
 order by 2 desc; 
- --en çok satın alınan ürün ramendir ve 8 kez alınmıştır.
+ --en Ã§ok satÄ±n alÄ±nan Ã¼rÃ¼n ramendir ve 8 kez alÄ±nmÄ±ÅŸtÄ±r.
 
- --5.Her bir müşteri için en popüler ürün hangisidir?
+ --5.Her bir mÃ¼ÅŸteri iÃ§in en popÃ¼ler Ã¼rÃ¼n hangisidir?
 
 with tablo as(
 select customer_id,
@@ -108,7 +108,7 @@ group by customer_id,product_name
 select customer_id, product_name, total
 from tablo where rn=1;
 
---6.Müşteri üye olduktan sonra ilk olarak hangi ürünü satın aldı?
+--6.MÃ¼ÅŸteri Ã¼ye olduktan sonra ilk olarak hangi Ã¼rÃ¼nÃ¼ satÄ±n aldÄ±?
 WITH tablo AS (
     SELECT 
         s.customer_id,
@@ -129,9 +129,9 @@ FROM tablo
 WHERE row_num=1
 ORDER BY customer_id, order_date;
 
---A müşterisi üye olduktan sonra ilk curry, B müşterisi üye aldıktan sonra ilk sushi almış.
+--A mÃ¼ÅŸterisi Ã¼ye olduktan sonra ilk curry, B mÃ¼ÅŸterisi Ã¼ye aldÄ±ktan sonra ilk sushi almÄ±ÅŸ.
 
---7.Müşteri üye olmadan hemen önce hangi ürün satın alındı?
+--7.MÃ¼ÅŸteri Ã¼ye olmadan hemen Ã¶nce hangi Ã¼rÃ¼n satÄ±n alÄ±ndÄ±?
 
 WITH tablo AS(
 SELECT s.customer_id, m.product_name, s.order_date,
@@ -146,9 +146,9 @@ FROM tablo
 WHERE rn=1
 Order by 1,2;
 
--- A müşterisi curry ve sushi almış, B müşterisi sushi almış.
+-- A mÃ¼ÅŸterisi curry ve sushi almÄ±ÅŸ, B mÃ¼ÅŸterisi sushi almÄ±ÅŸ.
 
---8.Üye olmadan önce her üyenin toplam harcaması ve kalemleri ne kadardı?
+--8.Ãœye olmadan Ã¶nce her Ã¼yenin toplam harcamasÄ± ve kalemleri ne kadardÄ±?
 SELECT s.customer_id,
        count(s.product_id),
 	   sum(price)
@@ -159,9 +159,9 @@ WHERE order_date < join_date
 Group BY s.customer_id
 ORDER BY 1,2;
 
---A müşterisi 2 kalem harcamış ve toplam harcaması 25, B müşterisi 3 kalem harcamış ve toplam harcaması 40.
+--A mÃ¼ÅŸterisi 2 kalem harcamÄ±ÅŸ ve toplam harcamasÄ± 25, B mÃ¼ÅŸterisi 3 kalem harcamÄ±ÅŸ ve toplam harcamasÄ± 40.
 
---9.Harcadığınız her 1 dolar 10 puana eşitse ve suşinin 2x puan çarpanı varsa, her müşteri kaç puan kazanırdı?
+--9.HarcadÄ±ÄŸÄ±nÄ±z her 1 dolar 10 puana eÅŸitse ve sushinin 2x puan Ã§arpanÄ± varsa, her mÃ¼ÅŸteri kaÃ§ puan kazanÄ±rdÄ±?
 WITH tablo AS(
             SELECT customer_id,
                    product_name,
@@ -178,15 +178,15 @@ SELECT customer_id,
 FROM tablo
 GROUP BY customer_id;
 
---A müşterisi 860, B müşterisi 940, C müşterisi 360 toplam kazanca sahip olur.
+--A mÃ¼ÅŸterisi 860, B mÃ¼ÅŸterisi 940, C mÃ¼ÅŸterisi 360 toplam kazanca sahip olur.
 
---10.Müşteri programa katıldıktan sonraki ilk hafta (katılım tarihi dahil) sadece sushide değil tüm ürünlerde 2 kat puan kazanır -
---Ocak ayı sonunda müşteri A ve B'nin kaç puanı vardır?
+--10.MÃ¼ÅŸteri programa katÄ±ldÄ±ktan sonraki ilk hafta (katÄ±lÄ±m tarihi dahil) sadece sushide deÄŸil tÃ¼m Ã¼rÃ¼nlerde 2 kat puan kazanÄ±r -
+--Ocak ayÄ± sonunda mÃ¼ÅŸteri A ve B'nin kaÃ§ puanÄ± vardÄ±r?
 WITH tablo AS(
 SELECT 
     s.customer_id,
     mem.join_date AS start_date,
-    DATEADD(day, 6, mem.join_date) AS end_date,  -- join_date'e 6 gün ekleniyor
+    DATEADD(day, 6, mem.join_date) AS end_date,  
     s.order_date, 
     m.product_name,
     m.price,
@@ -208,4 +208,4 @@ SELECT customer_id,
 FROM tablo
 GROUP BY customer_id;
 
--- A müşterisinin 1370 puanı, B müşterisinin 820 puanı olur.
+-- A mÃ¼ÅŸterisinin 1370 puanÄ±, B mÃ¼ÅŸterisinin 820 puanÄ± olur.
