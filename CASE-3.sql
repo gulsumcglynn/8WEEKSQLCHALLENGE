@@ -2683,11 +2683,11 @@ VALUES
   
 
 --A. Customer Journey
---Based off the 8 sample customers provided in the sample from the subscriptions table, write a brief description about each customer’s onboarding journey.
+--Based off the 8 sample customers provided in the sample from the subscriptions table, write a brief description about each customerÂ’s onboarding journey.
 
 --B. Data Analysis Questions
 --1How many customers has Foodie-Fi ever had?
-SELECT COUNT(DISTINCT customer_id) AS musterý_sayýsý
+SELECT COUNT(DISTINCT customer_id) AS musteri_sayÄ±sÄ±
 FROM subscriptions;
 
 --2.What is the monthly distribution of trial plan start_date values for our dataset - use the start of the month as the group by value
@@ -2746,7 +2746,7 @@ WITH PlanDegisiklikleri AS (
 	JOIN plans p on s.plan_id = p.plan_id
 )
 SELECT 
-    SonrakiPlan AS Plan_adý, 
+    SonrakiPlan AS Plan_adÄ±, 
     COUNT(*) AS ToplamGecis,
 	100*COUNT(*) / (SELECT COUNT(DISTINCT customer_id) FROM subscriptions) AS churn_percentage
 FROM PlanDegisiklikleri
@@ -2777,13 +2777,13 @@ GROUP BY plan_name,plan_id;
 
 --8.How many customers have upgraded to an annual plan in 2020?
 SELECT 
-       COUNT(DISTINCT customer_id) musterý_sayýsý,
+       COUNT(DISTINCT customer_id) musteri_sayÄ±sÄ±,
 	   plan_name
 FROM subscriptions s
 JOIN plans p on p.plan_id = s.plan_id
 WHERE YEAR(start_date) = 2020 AND plan_name='pro annual'
 GROUP BY plan_name;
---195 pro annual planýna geçen var.
+--195 pro annual planÃ½na geÃ§en var.
 
 --9.How many days on average does it take for a customer to an annual plan from the day they join Foodie-Fi?
 WITH ANNUAL AS(
@@ -2828,13 +2828,13 @@ SELECT
     a.customer_id,
     a.annual_start_date,
     t.trial_start_date,
-    DATEDIFF(DAY, trial_start_date, annual_start_date) AS date_diff_days,  -- Tarih farký (gün)
+    DATEDIFF(DAY, trial_start_date, annual_start_date) AS date_diff_days,  -- Tarih farkÃ½ (gÃ¼n)
     CASE
-        WHEN DATEDIFF(DAY, trial_start_date, annual_start_date) BETWEEN 0 AND 30 THEN '0-30 gün'
-        WHEN DATEDIFF(DAY, trial_start_date, annual_start_date) BETWEEN 31 AND 60 THEN '31-60 gün'
-        WHEN DATEDIFF(DAY, trial_start_date, annual_start_date) BETWEEN 61 AND 90 THEN '61-90 gün'
-        WHEN DATEDIFF(DAY, trial_start_date, annual_start_date) BETWEEN 91 AND 120 THEN '91-120 gün'
-        ELSE '120+ gün'
+        WHEN DATEDIFF(DAY, trial_start_date, annual_start_date) BETWEEN 0 AND 30 THEN '0-30 gÃ¼n'
+        WHEN DATEDIFF(DAY, trial_start_date, annual_start_date) BETWEEN 31 AND 60 THEN '31-60 gÃ¼n'
+        WHEN DATEDIFF(DAY, trial_start_date, annual_start_date) BETWEEN 61 AND 90 THEN '61-90 gÃ¼n'
+        WHEN DATEDIFF(DAY, trial_start_date, annual_start_date) BETWEEN 91 AND 120 THEN '91-120 gÃ¼n'
+        ELSE '120+ gÃ¼n'
     END AS date_range
     
 FROM ANNUAL a
